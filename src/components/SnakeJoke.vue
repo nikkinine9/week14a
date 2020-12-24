@@ -11,10 +11,7 @@ export default {
   name: "SnakeJoke",
   computed: {
     joke() {
-      return this.$store.getters.getJoke
-        .toLowerCase()
-        .split(" ")
-        .join("_");
+      return this.$store.getters.getJoke.split(" ").join("_");
     }
   },
   methods: {
