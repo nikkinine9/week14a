@@ -1,31 +1,25 @@
 <template>
   <div class="card">
-    <br />
-    <button class="button is-danger" @click="toUpperCase">Loud Joke</button>
-    <br />
+    <div class="card-content">
+      <button class="button is-danger" @click="loadJoke()">Loud Joke</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "LoudJoke",
-  data() {
-    return {
-      currentJoke: "",
-      errorMessage: ""
-    };
+  computed: {
+    joke() {
+      return this.$store.getters.getJoke.toUpperCase();
+    }
   },
   methods: {
-    loadJoke(state) {
-      state.$store.commit("loadJoke");
-    },
-    toUpperCase() {
-      var str = "";
-      var res = str.toUpperCase();
-      document.getElementById("demo").innerHTML = res;
+    loadJoke() {
+      this.$store.commit("SET_NEW_JOKE", this.joke);
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scope></style>

@@ -1,26 +1,25 @@
 <template>
   <div class="card">
-    <br />
-    <button class="button is-danger" @click="loadJoke">Normal Joke</button>
-    <br />
+    <div class="card-content">
+      <button class="button is-danger" @click="loadJoke()">Normal Joke</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "NormalJoke",
-  data() {
-    return {
-      currentJoke: "",
-      errorMessage: ""
-    };
+  computed: {
+    joke() {
+      return this.$store.getters.getJoke.toLowerCase();
+    }
   },
   methods: {
-    loadJoke(state) {
-      state.$store.commit("loadJoke");
+    loadJoke() {
+      this.$store.commit("SET_NEW_JOKE", this.joke);
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scope></style>

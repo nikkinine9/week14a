@@ -1,43 +1,46 @@
 /* eslint-disable prettier/prettier */
+import axios from "axios";
+
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        data() {
-            return {
-                currentJoke: "",
-                errorMessage: ""
-            };
-        }
+        vueJoke: "",
     },
     mutations: {
-        loadJoke(state) {
+        SET_NEW_JOKE(state, payload) {
+            state.vueJoke = payload;
+        },
+    },
+    actions: {
+        loadJoke() {
             axios
                 .request({
                     type: "GET",
                     url: "https://cors-anywhere.herokuapp.com/geek-jokes.sameerkumar.website/api?format=json",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
                     },
-                    paramaters: {
-                        format: "text"
-                    }
+                    params: {
+                        format: "text",
+                    },
                 })
-                .then(response => {
-                    console.log(response);
-                    state.currentJoke = response.data.joke;
+                .then((response) => {
+                    this.commit("SET_NEW_JOKE", response.data.joke);
                 })
-                .catch(error => {
-                    state.errorMessage = error;
+                .catch((error) => {
+                    this.errorMessage = error;
                     console.log(error);
                 });
-        }
+        },
     },
-    actions: {},
-    modules: {}
+    getters: {
+        getJoke(state) {
+            return state.vueJoke;
+        },
+    },
 });

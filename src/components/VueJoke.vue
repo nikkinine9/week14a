@@ -2,14 +2,9 @@
 <template>
   <div class="card">
     <div class="card-content">
-      <button class="button is-primary" @click="loadJoke">Load Joke</button>
+      <button class="button is-primary" @click="loadJoke()">Load Joke</button>
       <hr />
-      <p v-if="errorMessage" class="notification is-danger">
-        {{ errorMessage }}
-      </p>
-      <p v-if="currentJoke" class="notification">
-        {{ currentJoke }}
-      </p>
+      <p>{{ this.joke }}</p>
       <normal-joke></normal-joke>
       <snake-joke></snake-joke>
       <loud-joke></loud-joke>
@@ -29,12 +24,14 @@ export default {
     SnakeJoke,
     LoudJoke
   },
-  data() {
-    return {};
+  computed: {
+    joke() {
+      return this.$store.getters.getJoke;
+    }
   },
   methods: {
     loadJoke() {
-      return this.$store.state("loadJoke");
+      this.$store.dispatch("loadJoke");
     }
   }
 };
